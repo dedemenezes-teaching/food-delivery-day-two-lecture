@@ -10,8 +10,6 @@ class Router
     puts "Welcome to Food Delivery Livecode APP"
     puts "--------"
     while @running
-      # SIGN IN
-      
       display_menu
       action = gets.chomp
       print `clear`
