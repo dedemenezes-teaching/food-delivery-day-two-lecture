@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../views/session_view'
 
 class SessionsController
@@ -17,7 +19,7 @@ class SessionsController
     # Two scenarios
     if current_user && current_user.password == password
       @session_view.signed_in_successfully(current_user)
-      return current_user
+      current_user
     else
       # 1. Tel the user he sent us some wrong credentials
       @session_view.wrong_credentials

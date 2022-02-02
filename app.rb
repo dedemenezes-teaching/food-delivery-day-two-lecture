@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TODO: require relevant files to bootstrap the app.
 # Then you can test your program with:
 #   ruby app.rb
@@ -9,7 +11,6 @@ require_relative 'app/controllers/meals_controller'
 require_relative 'app/repositories/customer_repository'
 require_relative 'app/controllers/customers_controller'
 require_relative 'router'
-
 
 meals_csv = 'data/meals.csv'
 meal_repo = MealRepository.new(meals_csv)

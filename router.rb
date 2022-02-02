@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Router
   def initialize(meals_controller, customers_controller, sessions_controller)
     @meals_controller = meals_controller

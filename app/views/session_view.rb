@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionView
   def ask_for(item)
     puts "#{item.capitalize}?"
@@ -5,7 +7,7 @@ class SessionView
   end
 
   def wrong_credentials
-    puts "Wrong credentials...Try again!"
+    puts 'Wrong credentials...Try again!'
   end
 
   def signed_in_successfully(employee)

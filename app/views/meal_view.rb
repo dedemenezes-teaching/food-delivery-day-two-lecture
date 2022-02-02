@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MealView
   def ask_for(item)
     puts "#{item.capitalize}?"

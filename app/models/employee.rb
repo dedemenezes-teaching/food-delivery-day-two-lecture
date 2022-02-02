@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Employee
   attr_accessor :id
   attr_reader :username, :password, :role
@@ -13,7 +15,7 @@ class Employee
 
   # Methods used inside our BASE REPOSITORY
   def self.csv_headers
-    ["id", "username", "password", "role"]
+    %w[id username password role]
   end
 
   def self.prepare_row(row)
