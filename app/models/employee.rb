@@ -13,6 +13,14 @@ class Employee
     @role = attributes[:role] # String
   end
 
+  def manager?
+    @role == 'manager'
+  end
+
+  def rider?
+    @role == 'rider'
+  end
+
   # Methods used inside our BASE REPOSITORY
   def self.csv_headers
     %w[id username password role]

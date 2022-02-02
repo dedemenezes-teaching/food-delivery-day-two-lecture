@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class Router
-  def initialize(meals_controller, customers_controller, sessions_controller)
+  def initialize(meals_controller, customers_controller, sessions_controller, orders_controller)
     @meals_controller = meals_controller
     @customers_controller = customers_controller
     @sessions_controller = sessions_controller
+    @orders_controller = orders_controller
     @running = true
   end
 
@@ -41,8 +42,8 @@ class Router
 
   def route_rider_action(action)
     case action
-    when '1' then puts '#TO-DO: List all undelivered order for the specific employee'
-    when '2' then puts '#TO-DO: MARk an order as delivered'
+    when '1' then @orders_controller.list_undelivered_orders
+    when '2' then @orders_controller.mark_as_delivered(@current_user)
     when '8' then @current_user = nil
     when '9'
       @current_user = nil
@@ -58,6 +59,8 @@ class Router
     when '2' then @meals_controller.list
     when '3' then @customers_controller.add
     when '4' then @customers_controller.list
+    when '5' then @orders_controller.add
+    when '6' then @orders_controller.list_undelivered_orders
     when '8' then @current_user = nil
     when '9'
       @current_user = nil
@@ -71,6 +74,8 @@ class Router
     puts '2. List all meals'
     puts '3. Add a new customer'
     puts '4. List all customers'
+    puts '5. Add a new order'
+    puts '6. List undelivered orders'
     puts '8. Logout'
     puts '9. quit'
     print '> '
