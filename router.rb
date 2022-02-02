@@ -10,25 +10,33 @@ class Router
   end
 
   def run
-    puts 'Welcome to Food Delivery Livecode APP'
-    puts '--------'
-    # SIGN IN
     while @running
       @current_user = @sessions_controller.sign_in
       while @current_user
-        if @current_user.role == 'manager'
-          display_manager_menu
-          action = gets.chomp
-          print `clear`
-          route_manager_action(action)
+        if @current_user.manager?
+          route_manager_action
         else
-          display_rider_menu
-          action = gets.chomp
-          print `clear`
-          route_rider_action(action)
+          route_rider_action
         end
       end
+      print `clear`
     end
+  end
+
+  private
+
+  def route_rider_action
+    display_rider_menu
+    action = gets.chomp
+    print `clear`
+    rider_action(action)
+  end
+
+  def route_manager_action
+    display_manager_menu
+    action = gets.chomp
+    print `clear`
+    manager_action(action)
   end
 
   def display_rider_menu
@@ -38,34 +46,6 @@ class Router
     puts '8. Logout'
     puts '9. Quit'
     print '> '
-  end
-
-  def route_rider_action(action)
-    case action
-    when '1' then @orders_controller.list_undelivered_orders
-    when '2' then @orders_controller.mark_as_delivered(@current_user)
-    when '8' then @current_user = nil
-    when '9'
-      @current_user = nil
-      @running = false
-    else
-      'Type something I know how to deal with'
-    end
-  end
-
-  def route_manager_action(action)
-    case action
-    when '1' then @meals_controller.add
-    when '2' then @meals_controller.list
-    when '3' then @customers_controller.add
-    when '4' then @customers_controller.list
-    when '5' then @orders_controller.add
-    when '6' then @orders_controller.list_undelivered_orders
-    when '8' then @current_user = nil
-    when '9'
-      @current_user = nil
-      @running = false
-    end
   end
 
   def display_manager_menu
@@ -79,5 +59,37 @@ class Router
     puts '8. Logout'
     puts '9. quit'
     print '> '
+  end
+
+  def rider_action(action)
+    case action
+    when '1' then @orders_controller.list_undelivered_orders
+    when '2' then @orders_controller.mark_as_delivered(@current_user)
+    when '8' then logout!
+    when '9' then quit_program!
+    else puts 'Type something I know how to deal with'
+    end
+  end
+
+  def manager_action(action)
+    case action
+    when '1' then @meals_controller.add
+    when '2' then @meals_controller.list
+    when '3' then @customers_controller.add
+    when '4' then @customers_controller.list
+    when '5' then @orders_controller.add
+    when '6' then @orders_controller.list_undelivered_orders
+    when '8' then logout!
+    when '9' then quit_program!
+    end
+  end
+
+  def logout!
+    @current_user = nil
+  end
+
+  def quit_program!
+    logout!
+    @running = false
   end
 end

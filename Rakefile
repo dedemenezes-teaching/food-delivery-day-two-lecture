@@ -30,12 +30,12 @@ task :int_order do
   sh 'rspec -t _order || true'
 end
 
-task default: %i[spec] #rubocop 
+task default: %i[spec] # rubocop
 
-task meal: %i[int_meal] #rubocop 
+task meal: %i[int_meal] # rubocop
 
-task customer: %i[int_customer] #rubocop 
+task customer: %i[int_customer] # rubocop
 
-task employee: %i[int_employee] #rubocop 
+task employee: %i[int_employee] # rubocop
 
-task order: %i[int_order] #rubocop 
+task order: %i[int_order] # rubocop

@@ -14,10 +14,16 @@ class MealsController
     price = @meal_view.ask_for(:price).to_i
     meal = Meal.new(name: name, price: price)
     @meal_repository.create(meal)
-    list
+    display_meal
   end
 
   def list
+    display_meal
+  end
+
+  private
+
+  def display_meal
     meals = @meal_repository.all
     @meal_view.display(meals)
   end

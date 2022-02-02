@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 require 'pry-byebug'
 class OrderRepository
@@ -19,11 +21,11 @@ class OrderRepository
   end
 
   def undelivered_orders
-    @orders.reject { |order| order.delivered? }
+    @orders.reject(&:delivered?)
   end
 
   def my_undelivered_orders(employee)
-    @orders.select { |order| order.employee == employee && !order.delivered?}
+    @orders.select { |order| order.employee == employee && !order.delivered? }
   end
 
   def mark_as_delivered(order)
@@ -35,7 +37,7 @@ class OrderRepository
 
   def save_csv
     CSV.open(@orders_csv_path, 'wb') do |csv|
-            # [:id, :meal_id, :customer_id...] same below
+      # [:id, :meal_id, :customer_id...] same below
       csv << %i[id delivered meal_id customer_id employee_id]
       @orders.each do |order|
         # binding.pry
@@ -61,5 +63,4 @@ class OrderRepository
     end
     @next_id = @orders.empty? ? 1 : @orders.last.id + 1
   end
-
 end

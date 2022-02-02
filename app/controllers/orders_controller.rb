@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 require_relative '../views/meal_view'
 require_relative '../views/customer_view'
 require_relative '../views/session_view'
 require_relative '../models/order'
 require_relative '../views/order_view'
-
 
 class OrdersController
   def initialize(meal_repo, customer_repo, employee_repo, order_repo)
@@ -18,50 +19,20 @@ class OrdersController
   end
 
   def add
-    # MEAL SITUATION
-    # 1. fetch all meals from my meal repository
-    meals = @meal_repo.all
-    # Display all meals
-    @meal_view.display(meals)
-    # Ask for the meal in the list
-    index = @meal_view.ask_for(:index).to_i - 1
-    # store this meal to create my order
-    meal = meals[index]
-
-    # CUSTOMER SITUATION
-    customers = @customer_repo.all
-    # Display all customers
-    @customer_view.display(customers)
-    # Ask for the customer in the list
-    index = @customer_view.ask_for(:index).to_i - 1
-    # store this customer to create my order
-    customer = customers[index]
-
-    # EMPLOYEE SITUATION
-    employees = @employee_repo.all_riders
-    # Display all riders
-    @session_view.display(employees)
-    # Ask for the employee in the list
-    index = @session_view.ask_for(:index).to_i - 1
-    # store this employee to create my order
-    employee = employees[index]
-
-    order = Order.new({meal: meal, customer: customer, employee: employee})
+    meal = select_meal
+    customer = select_customer
+    employee = select_employee
+    order = Order.new({ meal: meal, customer: customer, employee: employee })
     @order_repo.create(order)
   end
 
   def list_undelivered_orders
-    # FETCH FROM THE DB UNDELIVERED ORDERS
     undelivered_orders = @order_repo.undelivered_orders
-    # DISPLAY IN MY VIEW
     @order_view.display(undelivered_orders)
   end
 
   def list_my_orders(current_user)
-    # FETCH THE INFORMATIO
-    my_undelivered_orders = @order_repo.my_undelivered_orders(current_user)
-    # DISPLAY
-    @order_view.display(my_undelivered_orders)
+    list_my_undelivered_orders(current_user)
   end
 
   def mark_as_delivered(current_user)
@@ -70,5 +41,33 @@ class OrdersController
     my_orders = @order_repo.my_undelivered_orders(current_user)
     order = my_orders[index]
     @order_repo.mark_as_delivered(order)
+  end
+
+  private
+
+  def select_meal
+    meals = @meal_repo.all
+    @meal_view.display(meals)
+    index = @meal_view.ask_for(:index).to_i - 1
+    meals[index]
+  end
+
+  def select_customer
+    customers = @customer_repo.all
+    @customer_view.display(customers)
+    index = @customer_view.ask_for(:index).to_i - 1
+    customers[index]
+  end
+
+  def select_employee
+    employees = @employee_repo.all_riders
+    @session_view.display(employees)
+    index = @session_view.ask_for(:index).to_i - 1
+    employees[index]
+  end
+
+  def list_my_undelivered_orders(user)
+    orders = @order_repo.my_undelivered_orders(user)
+    @order_view.display(orders)
   end
 end

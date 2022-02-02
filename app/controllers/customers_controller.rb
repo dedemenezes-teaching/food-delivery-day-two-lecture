@@ -14,9 +14,16 @@ class CustomersController
     address = @customer_view.ask_for(:address)
     customer = Customer.new(name: name, address: address)
     @customer_repo.create(customer)
+    display_customers
   end
 
   def list
+    display_customers
+  end
+
+  private
+
+  def display_customers
     customers = @customer_repo.all
     @customer_view.display(customers)
   end

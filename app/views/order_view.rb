@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderView
   def display(orders)
     orders.each_with_index do |order, index|

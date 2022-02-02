@@ -11,7 +11,7 @@ class EmployeeRepository < BaseRepository
   undef create
 
   def all_riders
-    @elements.select { |employee| employee.rider? }
+    @elements.select(&:rider?)
   end
 
   def find_by_username(username)

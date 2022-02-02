@@ -17,6 +17,7 @@ class SessionView
   end
 
   def signed_in_successfully(employee)
+    print `clear`
     puts "WELCOME, #{employee.username}!"
   end
 end

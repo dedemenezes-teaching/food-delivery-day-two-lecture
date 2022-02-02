@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Order
   attr_accessor :id
   attr_reader :meal, :customer, :employee
