@@ -63,7 +63,7 @@ class Router
 
   def rider_action(action)
     case action
-    when '1' then @orders_controller.list_undelivered_orders
+    when '1' then @orders_controller.list_my_orders(@current_user)
     when '2' then @orders_controller.mark_as_delivered(@current_user)
     when '8' then logout!
     when '9' then quit_program!
